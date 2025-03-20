@@ -23,6 +23,8 @@
       -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie/src/js.cookie.js"></script>
+
     <script defer src="./app.js"></script>
 
     <style media="screen">
@@ -56,6 +58,8 @@
       <div class="profile-img"><img id="profile-img" src="" /></div>
       <div class="name" id="name"></div>
     </div>
+
+    Contact name: <span class="contact-name" id="contact-name"></span>
 
     <button onclick="googleLoginWithPopUp()">Login with Google PopUp</button>
     <button onclick="googleLoginWithRedirect()">Login with Google Redirect</button>

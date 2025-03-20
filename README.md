@@ -36,11 +36,18 @@ const googleLoginWithPopUp = () => {
     .signInWithPopup(provider)
     .then((result) => {
       const credential = result.credential;
-      const token = credential.accessToken;
       const user = result.user;
       const profile = result.additionalUserInfo.profile;
+      const token = credential.accessToken;
 
-      appendUserInfo({ avatar_url: profile.picture, name: profile.name });
+      // npm js-cookies package
+      Cookies.set("googleAccessToken", token, {
+        expires: 1, // Cookie expires in 1 day
+        secure: true, // Only sent over HTTPS
+        sameSite: "Strict", // Helps prevent CSRF attacks
+      });
+
+      // Do something with the data.
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -56,3 +63,23 @@ const googleLoginWithPopUp = () => {
 **Store the Token Securely:** Secure cookies is the most way of storing the token.
 **Use the Token for API Requests:** Use it to make authorized requests to the Google API or any other service that requires authentication.
 **Handle Token Expiration:** Tokens typically have a limited lifespan. You should implement a mechanism to refresh the token or prompt the user to log in again when the token expires.
+
+### GitHub login
+
+```js
+function loginWithGithub(provider) {
+  // GitHub provider
+  var provider = new firebase.auth.GithubAuthProvider();
+
+  // GitHub scope
+  provider.addScope("repo");
+
+  // Probably not gitHub unique
+  provider.setCustomParameters({
+    allow_signup: "false",
+  });
+
+  // The rest is tha same as for the google example
+  // firebase.auth().signInWithPopup(provider).then((result) => {...}
+}
+```
